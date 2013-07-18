@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ace="http://www.icefaces.org/icefaces/components"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:icecore="http://www.icefaces.org/icefaces/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../components/template.xhtml">
+
+	<ui:define name="content">
+		<ice:panelGrid columns="1" rendered="#{sessionBean.admin}"
+			width="100%">
+
+			<ice:outputLabel value="Roles Manager" styleClass="titlePage" />
+
+			<ice:panelGrid columns="2" styleClass="tableContainer">
+
+				<ice:panelGrid columns="1" styleClass="leftBar">
+
+					<ice:column style="width: 100%;">
+						<ace:dataTable value="#{appBean.roleList}" var="role"
+							scrollable="true" scrollHeight="400">
+							<ace:column headerText="Accounts"
+								style="width: 100%;text-align:left;">
+								<ice:commandLink value="#{role.name}"
+									actionListener="#{sessionBean.roleEditor.listenerSelectRole}" />
+							</ace:column>
+						</ace:dataTable>
+					</ice:column>
+					<ice:panelGroup>
+						<ice:commandButton value="+"
+							actionListener="#{sessionBean.roleEditor.listenerCreateRole}" />
+					</ice:panelGroup>
+
+				</ice:panelGrid>
+
+
+				<ice:panelGrid columns="2"
+					rendered="#{sessionBean.roleEditor.currentRole != null}"
+					styleClass="mainArea">
+
+					<ice:outputLabel value="Name" styleClass="title" />
+					<ice:outputLabel value="#{sessionBean.roleEditor.currentRole.name}"
+						rendered="#{!sessionBean.roleEditor.create}" styleClass="text" />
+					<ice:inputText value="#{sessionBean.roleEditor.currentRole.name}"
+						rendered="#{sessionBean.roleEditor.create}" styleClass="text" />
+
+					<ice:outputLabel value="Description" styleClass="title" />
+					<ice:inputTextarea
+						value="#{sessionBean.roleEditor.currentRole.description}"
+						styleClass="text" />
+
+					<ice:outputText />
+					<ice:column>
+						<ice:commandButton value="Cancel"
+							actionListener="#{sessionBean.roleEditor.listenerCancel}" />
+						<ice:commandButton value="Save"
+							actionListener="#{sessionBean.roleEditor.listenerSaveRole}"
+							onclick="#{appBean.JSConfirmationSave}" />
+					</ice:column>
+
+				</ice:panelGrid>
+
+
+
+			</ice:panelGrid>
+
+		</ice:panelGrid>
+
+	</ui:define>
+
+</ui:composition>

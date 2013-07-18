@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
+    version="2.1">
+
+	<managed-bean>
+        <managed-bean-name>appBean</managed-bean-name>
+        <managed-bean-class>de.mpiwg.dm2e.userManager.beans.ApplicationBean</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+	<managed-bean>
+        <managed-bean-name>sessionBean</managed-bean-name>
+        <managed-bean-class>de.mpiwg.dm2e.userManager.beans.SessionBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <navigation-rule>
+        <navigation-case>            
+            <from-outcome>accountsManager</from-outcome>
+            <to-view-id>/protected/accountsManager.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>            
+            <from-outcome>rolesManager</from-outcome>
+            <to-view-id>/protected/rolesEditor.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>            
+            <from-outcome>ownAccount</from-outcome>
+            <to-view-id>/protected/ownAccount.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>        
+        <navigation-case>            
+            <from-outcome>register</from-outcome>
+            <to-view-id>/public/register.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case> 
+	</navigation-rule>            
+    
+</faces-config>

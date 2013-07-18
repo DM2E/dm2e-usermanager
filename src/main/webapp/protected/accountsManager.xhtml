@@ -1,0 +1,222 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ace="http://www.icefaces.org/icefaces/components"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:icecore="http://www.icefaces.org/icefaces/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../components/template.xhtml">
+
+	<ui:define name="content">
+		<ice:panelGrid columns="1" rendered="#{sessionBean.admin}" width="100%">
+			
+			<ice:outputLabel value="Account Manager" styleClass="titlePage"/>
+
+			<ice:panelPopup autoCentre="true" draggable="true" modal="true"
+				rendered="#{sessionBean.accountsManager.currentUserRole != null}">
+				<f:facet name="header">
+					<ice:outputText value="Assign Roles" />
+				</f:facet>
+				<f:facet name="body">
+					<ice:panelGrid columns="1" style="text-align:center;">
+						<ice:panelGrid columns="2">
+							<ice:outputLabel value="Role" />
+							<ice:selectOneMenu
+								value="#{sessionBean.accountsManager.currentUserRole.id.roleName}">
+								<f:selectItems
+									value="#{sessionBean.accountsManager.unusedRoleList}" />
+							</ice:selectOneMenu>
+						</ice:panelGrid>
+						<ice:panelGrid columns="2">
+							<ice:commandButton value="Cancel"
+								actionListener="#{sessionBean.accountsManager.listenerCancelAddUserRole}" />
+							<ice:commandButton value="Save"
+								actionListener="#{sessionBean.accountsManager.listenerSaveUserRole}" />
+						</ice:panelGrid>
+					</ice:panelGrid>
+				</f:facet>
+			</ice:panelPopup>
+
+			<ice:panelPopup autoCentre="true" draggable="true" modal="true"
+				rendered="#{sessionBean.accountsManager.currentUserProp != null}">
+				<f:facet name="header">
+					<ice:outputText value="New Property" />
+				</f:facet>
+				<f:facet name="body">
+					<ice:panelGrid columns="1" style="text-align:center;">
+						<ice:panelGrid columns="2">
+							<ice:outputLabel value="Name" />
+							<ice:inputText
+								value="#{sessionBean.accountsManager.currentUserProp.id.name}" />
+							<ice:outputLabel value="Value" />
+							<ice:inputText
+								value="#{sessionBean.accountsManager.currentUserProp.value}" />
+						</ice:panelGrid>
+						<ice:panelGrid columns="2">
+							<ice:commandButton value="Cancel"
+								actionListener="#{sessionBean.accountsManager.listenerCancelAddUserProp}" />
+							<ice:commandButton value="Save"
+								actionListener="#{sessionBean.accountsManager.listenerSaveUserProp}" />
+						</ice:panelGrid>
+					</ice:panelGrid>
+				</f:facet>
+			</ice:panelPopup>
+
+			<ice:panelPopup autoCentre="true" draggable="true" modal="true"
+				rendered="#{sessionBean.accountsManager.changePassword}">
+				<f:facet name="header">
+					<ice:outputText value="Change Password" />
+				</f:facet>
+				<f:facet name="body">
+					<ice:panelGrid columns="1" style="text-align:center;">
+						<ice:panelGrid columns="2">
+							<ice:outputLabel value="Password" />
+							<ice:inputSecret value="#{sessionBean.accountsManager.password}" />
+							<ice:outputLabel value="Repeat password" />
+							<ice:inputSecret
+								value="#{sessionBean.accountsManager.passwordRepeat}" />
+						</ice:panelGrid>
+						<ice:panelGrid columns="2">
+							<ice:commandButton value="Cancel"
+								actionListener="#{sessionBean.accountsManager.listenerCancelChangePwd}" />
+							<ice:commandButton value="Save"
+								actionListener="#{sessionBean.accountsManager.listenerSaveNewPwd}" />
+						</ice:panelGrid>
+					</ice:panelGrid>
+				</f:facet>
+			</ice:panelPopup>
+
+
+			<ice:panelGrid columns="2" styleClass="tableContainer">
+
+				<ice:panelGrid columns="1" 
+					styleClass="leftBar">
+					<ice:column style="width: 100%;">
+						<ace:dataTable value="#{appBean.userList}" var="user"
+							scrollable="true" scrollHeight="400">
+							<ace:column headerText="Accounts"
+								style="width: 100%;text-align:left;">
+								<ice:commandLink value="#{user.login}"
+									actionListener="#{sessionBean.accountsManager.listenerSelectUser}" />
+							</ace:column>
+						</ace:dataTable>
+					</ice:column>
+					<ice:panelGroup>
+						<ice:commandButton value="+"
+							actionListener="#{sessionBean.accountsManager.listenerCreateUser}" />
+					</ice:panelGroup>
+				</ice:panelGrid>
+
+
+				<ice:panelGrid columns="2"
+					rendered="#{sessionBean.accountsManager.currentUser != null}"
+					styleClass="mainArea">
+
+					<ice:outputLabel value="Login" styleClass="title"/>
+					<ice:outputLabel
+						value="#{sessionBean.accountsManager.currentUser.login}"
+						rendered="#{!sessionBean.accountsManager.create}"
+						styleClass="text" />
+					<ice:inputText
+						value="#{sessionBean.accountsManager.currentUser.login}"
+						rendered="#{sessionBean.accountsManager.create}"
+						style="width: 200px;" styleClass="text"/>
+
+					<ice:outputLabel value="Password"
+						rendered="#{sessionBean.accountsManager.create}" styleClass="title"/>
+					<ice:inputSecret value="#{sessionBean.accountsManager.password}"
+						rendered="#{sessionBean.accountsManager.create}"
+						style="width: 200px;" styleClass="text"/>
+
+					<ice:outputLabel value="Repeat Password"
+						rendered="#{sessionBean.accountsManager.create}" styleClass="title"/>
+					<ice:inputSecret
+						value="#{sessionBean.accountsManager.passwordRepeat}"
+						rendered="#{sessionBean.accountsManager.create}"
+						style="width: 200px;" styleClass="text"/>
+
+					<ice:outputLabel value="Name" styleClass="title"/>
+					<ice:inputText
+						value="#{sessionBean.accountsManager.currentUser.name}"
+						style="width: 200px;" styleClass="text"/>
+
+					<ice:outputLabel value="Description" styleClass="title"/>
+					<ice:inputTextarea
+						value="#{sessionBean.accountsManager.currentUser.description}"
+						style="width: 200px;" styleClass="text"/>
+
+					<ice:outputText />
+					<ice:column>
+						<ice:commandButton value="Cancel"
+							actionListener="#{sessionBean.accountsManager.listenerCancelEdition}" />
+						<ice:commandButton value="Save"
+							actionListener="#{sessionBean.accountsManager.listenerSaveUser}"
+							onclick="#{appBean.JSConfirmationSave}" />
+						<ice:commandButton value="Change Password"
+							actionListener="#{sessionBean.accountsManager.listenerOpenChangePwdDialog}"
+							rendered="#{!sessionBean.accountsManager.create}" />
+					</ice:column>
+
+
+					<ice:outputLabel value="Roles"
+						rendered="#{!sessionBean.accountsManager.create}" styleClass="title"/>
+					<ice:panelGrid columns="1" width="400px;"
+						rendered="#{!sessionBean.accountsManager.create}">
+						<ace:dataTable value="#{sessionBean.accountsManager.roleList}"
+							var="soRole" style="width:100%;"
+							rendered="#{!empty sessionBean.accountsManager.roleList}">
+							<ace:column headerText="Role" style="text-align:left;">
+								<ice:outputLabel value="#{soRole.obj.id.roleName}" styleClass="textInTable"/>
+							</ace:column>
+							<ace:column>
+								<ice:selectBooleanCheckbox value="#{soRole.selected}" />
+							</ace:column>
+						</ace:dataTable>
+						<ice:panelGroup>
+							<ice:commandButton value="Remove"
+								actionListener="#{sessionBean.accountsManager.listenerRemoveUserRole}"
+								rendered="#{!empty sessionBean.accountsManager.roleList}" />
+							<ice:commandButton value="Add"
+								actionListener="#{sessionBean.accountsManager.listenerAddUserRole}" />
+						</ice:panelGroup>
+					</ice:panelGrid>
+
+					<ice:outputLabel value="Properties"
+						rendered="#{!sessionBean.accountsManager.create}" styleClass="title"/>
+					<ice:panelGrid columns="1" width="400px;"
+						rendered="#{!sessionBean.accountsManager.create}">
+						<ace:dataTable value="#{sessionBean.accountsManager.propList}"
+							var="soProp" style="width:100%;"
+							rendered="#{!empty sessionBean.accountsManager.propList}">
+							<ace:column headerText="Name" style="text-align:left;">
+								<ice:outputLabel value="#{soProp.obj.id.name}" styleClass="textInTable"/>
+							</ace:column>
+							<ace:column headerText="Value" style="text-align:left;">
+								<ice:outputLabel value="#{soProp.obj.value}" styleClass="textInTable"/>
+							</ace:column>
+							<ace:column>
+								<ice:selectBooleanCheckbox value="#{soProp.selected}" />
+							</ace:column>
+						</ace:dataTable>
+						<ice:panelGroup>
+							<ice:commandButton value="Remove"
+								actionListener="#{sessionBean.accountsManager.listenerRemoveUserProp}"
+								rendered="#{!empty sessionBean.accountsManager.propList}" />
+							<ice:commandButton value="Add"
+								actionListener="#{sessionBean.accountsManager.listenerAddUserProp}" />
+						</ice:panelGroup>
+					</ice:panelGrid>
+
+
+				</ice:panelGrid>
+
+
+
+			</ice:panelGrid>
+
+		</ice:panelGrid>
+
+	</ui:define>
+
+</ui:composition>

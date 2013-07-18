@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ace="http://www.icefaces.org/icefaces/components"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:icecore="http://www.icefaces.org/icefaces/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="../components/template.xhtml">
+
+	<ui:define name="content">
+
+
+
+		<ice:panelGrid columns="1" width="100%">
+
+			<ice:outputLabel value="Register" styleClass="titlePage" />
+
+			<ice:panelGrid columns="2"
+				rendered="#{sessionBean.register.currentUser != null}"
+				width="100%">
+
+				<ice:outputLabel value="Login" styleClass="title" />
+				<ice:inputText value="#{sessionBean.register.currentUser.login}"
+					styleClass="text" />
+
+				<ice:outputLabel value="Password" styleClass="title" />
+				<ice:inputSecret value="#{sessionBean.register.password}"
+					styleClass="text" />
+
+				<ice:outputLabel value="Repeat Password" styleClass="title" />
+				<ice:inputSecret value="#{sessionBean.register.passwordRepeat}"
+					styleClass="text" />
+
+				<ice:outputLabel value="Name" styleClass="title" />
+				<ice:inputText value="#{sessionBean.register.currentUser.name}"
+					styleClass="text" />
+
+				<ice:outputLabel value="Description" styleClass="title" />
+				<ice:inputTextarea
+					value="#{sessionBean.register.currentUser.description}"
+					styleClass="text" />
+
+				<ice:outputText />
+				<ice:column>
+					<ice:commandButton value="Cancel"
+						actionListener="#{sessionBean.register.listenerClean}" />
+					<ice:commandButton value="Save"
+						actionListener="#{sessionBean.register.listenerSaveUser}"
+						onclick="#{appBean.JSConfirmationSave}" />
+				</ice:column>
+
+			</ice:panelGrid>
+
+
+
+		</ice:panelGrid>
+
+
+
+	</ui:define>
+
+</ui:composition>

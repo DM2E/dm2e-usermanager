@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<!-- second level cache configuration -->
+		<!-- Enable/Disable the second-level cache -->
+		<!-- 
+		<property name="cache.use_second_level_cache">true</property>
+		<property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+		<property name="cache.use_structured_entries">true</property>
+		<property name="cache.use_query_cache">true</property>
+		<property name="cache.use_minimal_puts">true</property>
+         -->
+
+		<!-- hibernate.cfg.xml -->
+		<!-- 
+		<property name="c3p0.min_size">5</property>
+		<property name="c3p0.max_size">50</property>
+		<property name="c3p0.timeout">1800</property>
+		<property name="c3p0.max_statements">100</property>
+		<property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		 -->
+		<!-- no "connection.pool_size" entry! -->
+
+		<!--
+			fix to: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException
+		-->
+		<!--
+			property name="connection.autoReconnect">true</property> <property
+			name="connection.autoReconnectForPools">true</property> <property
+			name="connection.is-connection-validation-required">true</property
+		-->
+
+		<!--
+			property
+			name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property
+		-->
+		
+		<property name="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory</property>
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.use_query_cache">true</property>
+		
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.autoReconnect">true</property>
+        <property name="hibernate.connection.autoReconnectForPools">true</property>
+		
+		<!-- <property name="hibernate.cache.use_second_level_cache">true</property> -->
+		 
+		   
+		<!--
+		<property name="hibernate.connection.url">jdbc:mysql://localhost/ismi_sandbox?characterEncoding=UTF-8</property> 
+		<property name="hibernate.connection.url">jdbc:mysql://localhost/openmind?characterEncoding=UTF-8</property>
+		 -->
+		<property name="hibernate.connection.url">jdbc:mysql://localhost/josso?characterEncoding=UTF-8&amp;autoReconnect=true</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">admindm2e</property>        
+           
+		<!--
+		<property name="hibernate.connection.username">ismi</property>
+        <property name="hibernate.connection.password">ismipw</property> 
+		<property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">e1nste1n</property>
+		 -->
+		<property name="hibernate.connection.charSet">UTF-8</property>
+
+        
+		<!-- 
+		<property name="show_sql">true</property>
+		 -->
+		<property name="current_session_context_class">thread</property>
+		<!--
+			property
+			name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property
+		-->
+		<!-- 
+		<property name="hbm2ddl.auto">create</property>
+		 -->
+		<mapping class="de.mpiwg.dm2e.userManager.db.bo.User" />
+		<mapping class="de.mpiwg.dm2e.userManager.db.bo.Role" />
+		<mapping class="de.mpiwg.dm2e.userManager.db.bo.UserProperty" />
+		<mapping class="de.mpiwg.dm2e.userManager.db.bo.UserRole" />
+	</session-factory>
+</hibernate-configuration>

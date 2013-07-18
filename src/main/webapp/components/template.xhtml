@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<h:head>
+	    <title>User Manager</title>
+	    <!-- 
+	    <link rel="stylesheet" type="text/css" href="/userManager/xmlhttp/css/rime/rime.css" />
+	     -->
+	   	<ice:outputStyle href="#{appBean.requestContextPath}/resources/css/royale/royale.css"/>
+	   	<ice:outputStyle href="#{appBean.requestContextPath}/resources/css/josso/screen.css"/>  
+	   	<ice:outputStyle href="#{appBean.requestContextPath}/resources/css/main.css"/>    
+	     
+	</h:head>
+	
+	<h:body>
+	
+	<div id="wrapper">
+	
+	    <div id="header">
+	
+	        <h1>
+	            <a href="http://dm2e.eu/">
+	                <img src="#{appBean.requestContextPath}/resources/img/content/dm2e_logo.png" alt="Digitised Manuscripts to Europeana" />
+	            </a>        
+	        </h1>
+	        
+	        <h2>
+	        	<ice:panelGrid columns="2">
+	        		<ice:outputLabel value="User Manager"/>
+	        		<ice:outputConnectionStatus />
+	        	</ice:panelGrid>				 
+	        </h2>
+	    </div>	
+	    
+		<div id="content" class="clearfix">
+		
+					<div class="main">
+						<ice:panelGrid columns="1" style="width:100%;">
+					    	<ice:form style="width:100%;">
+								<!-- Menu -->
+								<ice:panelGrid columns="1" style="width: 100%;">
+									<ice:panelGrid style="background-color: #D0D4EE;width: 100%;">
+										<ice:menuBar id="menuBar">
+											<ice:menuItem value="Register" action="register"/>
+											<ice:menuItem value="Own Account" action="ownAccount" rendered="#{!sessionBean.principalNull}" />
+											<!-- principal should be admin to see this item -->
+											<ice:menuItem value="Accounts Manager" action="accountsManager"  rendered="#{sessionBean.admin}" />
+											<ice:menuItem value="Roles Manager" action="rolesManager" rendered="#{sessionBean.admin}" />											
+										</ice:menuBar>
+									</ice:panelGrid>
+									
+									<ice:panelGrid columns="2" style="width: 100%; text-align: right;">
+										<ice:outputText style="width: 70%"/>
+										<ice:column>
+											<ice:outputLabel 
+												value="Welcome #{sessionBean.principal.name}" rendered="#{!sessionBean.principalNull}"
+												style="margin-right:50px;margin-left:50px;"/>
+											<ice:outputLink value="#{appBean.logoutUrl}" 
+												rendered="#{!sessionBean.principalNull}" 
+												style="margin-right:50px;margin-left:50px;">Logout</ice:outputLink>
+											<ice:outputLink value="#{appBean.loginUrl}" 
+												rendered="#{sessionBean.principalNull}" 
+												style="margin-right:50px;margin-left:50px;">Login</ice:outputLink>
+										</ice:column>					
+									</ice:panelGrid>
+								</ice:panelGrid>						    	
+					    		<ui:insert name="content" />
+					    	</ice:form>
+				    	</ice:panelGrid>					
+					</div>		
+		
+			<div id="partner-public">
+				<div id="subwrapper">
+				</div>
+      		</div>
+      	</div>
+		<div id="footer">
+        	<ice:outputText value="© 2012 DM2E"/>
+    	</div>
+	</div>      	
+
+	
+	
+		
+			<ice:form>
+				<!-- Messages -->
+				<ice:panelPopup autoCentre="true" draggable="true" modal="true"
+		            rendered="#{!empty sessionBean.msgList}">
+		            <f:facet name="header">
+		                <ice:outputText value="Message" />
+		            </f:facet>
+		            <f:facet name="body">
+		                <ice:panelGrid columns="1" style="text-align:center;">
+			                <ice:panelGrid columns="2">
+			                    <ice:graphicImage url="/resources/images/info_32.png" />
+			                    <ice:columnGroup>
+			                        <ice:dataTable value="#{sessionBean.msgList}" var="msg"
+			                            rows="10">
+			                            <h:column>
+			                                <ice:outputText value="#{msg}" />
+			                            </h:column>
+			                        </ice:dataTable>
+			                    </ice:columnGroup>
+			                </ice:panelGrid>
+		                    <ice:commandButton value="Close"
+		                        actionListener="#{sessionBean.listenerEmptyMsgList}" />
+		                </ice:panelGrid>
+		            </f:facet>
+		        </ice:panelPopup>			
+			</ice:form>
+	
+	</h:body>
+
+</html>
