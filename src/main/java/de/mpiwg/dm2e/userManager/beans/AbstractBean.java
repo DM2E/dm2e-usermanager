@@ -27,4 +27,8 @@ public abstract class AbstractBean {
 	public DataProvider getDp(){
 		return getAppBean().getDp();
 	}
+	
+	public void addInternalError(){
+		this.addMsg("Internal Error. This action was not executed successfully.");
+	}
 }

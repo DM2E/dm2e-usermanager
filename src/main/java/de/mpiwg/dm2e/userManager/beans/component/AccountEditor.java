@@ -3,6 +3,10 @@ package de.mpiwg.dm2e.userManager.beans.component;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
@@ -14,6 +18,7 @@ import de.mpiwg.dm2e.userManager.db.bo.Role;
 import de.mpiwg.dm2e.userManager.db.bo.User;
 import de.mpiwg.dm2e.userManager.db.bo.UserProperty;
 import de.mpiwg.dm2e.userManager.db.bo.UserRole;
+import de.mpiwg.dm2e.userManager.utils.Hashing;
 import de.mpiwg.dm2e.userManager.utils.SelectableObject;
 
 
@@ -67,7 +72,7 @@ public abstract class AccountEditor extends AbstractBean{
 			}			
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			addMsg(e.getMessage());
+			addInternalError();
 		}
 		this.currentUserProp = null;
 	}
@@ -108,7 +113,7 @@ public abstract class AccountEditor extends AbstractBean{
 			this.loadRolesAndProps();			
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			addMsg(e.getMessage());
+			addInternalError();
 		}
 		this.currentUserRole = null;
 	}
@@ -139,6 +144,7 @@ public abstract class AccountEditor extends AbstractBean{
 	public void listenerSaveNewPwd(ActionEvent event){
 		if(isNewPwdOk() && currentUser != null){
 			try {
+				this.password = Hashing.MD5(password);
 				currentUser.setPassword(password);
 				getDp().save(currentUser);
 				this.changePassword = false;
@@ -146,7 +152,7 @@ public abstract class AccountEditor extends AbstractBean{
 				this.passwordRepeat = null;
 			} catch (Exception e) {
 				logger.error(e.getMessage(), e);
-				addMsg(e.getMessage());
+				addInternalError();
 			}
 		}
 	}
@@ -165,7 +171,7 @@ public abstract class AccountEditor extends AbstractBean{
 					getDp().remove(so.getObj());
 				} catch (Exception e) {
 					logger.error(e.getMessage(), e);
-					addMsg(e.getMessage());
+					addInternalError();
 				}
 			}
 			this.loadRolesAndProps();
@@ -187,7 +193,7 @@ public abstract class AccountEditor extends AbstractBean{
 					getDp().remove(so.getObj());
 				} catch (Exception e) {
 					logger.error(e.getMessage(), e);
-					addMsg(e.getMessage());
+					addInternalError();
 				}
 			}
 			loadRolesAndProps();

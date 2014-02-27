@@ -11,6 +11,7 @@ import de.mpiwg.dm2e.userManager.db.bo.Role;
 import de.mpiwg.dm2e.userManager.db.bo.User;
 import de.mpiwg.dm2e.userManager.db.bo.UserProperty;
 import de.mpiwg.dm2e.userManager.db.bo.UserRole;
+import de.mpiwg.dm2e.userManager.db.bo.identities.UserPropertyId;
 
 
 public class DataProvider extends AbstractDataProvider{
@@ -23,8 +24,28 @@ public class DataProvider extends AbstractDataProvider{
 		logger.info("***************");
 	}
 	
+	@Override
+	public void save(User user) throws Exception{
+		super.save(user);
+		
+		//check if there is a property called email (required by josso).
+		UserProperty prop = getUserPropByUserLogin(user.getLogin(), "email");
+		if(prop == null){
+			prop = new UserProperty();
+			UserPropertyId id = new UserPropertyId();
+			id.setName("email");
+			id.setUserLogin(user.getLogin());
+			
+			prop.setValue(user.getEmail());
+			prop.setId(id);
+			this.saveUserProperty(prop);
+			
+		}
+		
+	}
+	
 	public boolean existUserLogin(String login){
-		return this.getUserMap().containsKey(login);
+		return (getUser(login) != null);		
 	}
 	
 	public boolean existRoleName(String roleName){
@@ -36,21 +57,28 @@ public class DataProvider extends AbstractDataProvider{
 		return this.getUserPropMap().getValuesByFirstKey(login);
 	}
 	
+	public UserProperty getUserPropByUserLogin(String login, String propName){
+		Collection<UserProperty> list = getUserPropMap().getValuesByFirstKey(login);
+		if(list != null){
+			for(UserProperty prop : list){
+				if(prop.getKey().equals(propName)){
+					return prop;
+				}
+			}	
+		}
+		return null;
+	}
+	
 	public Collection<UserRole> getUserRoleByUserLogin(String login){
 		return this.getUserRoleMap().getValuesByFirstKey(login);
 	}
 	
-	public Collection<User> getUsers(){
-		return getUserMap().values();
-	}
-	
-	public User getUser(String login){
-		return getUserMap().get(login);
-	}
-	
-	
 	public Collection<Role> getRoles(){
 		return getRoleMap().values();
+	}
+	
+	public Role getRoleByName(String roleName){
+		return getRoleMap().get(roleName);
 	}
 	
 	public List<Role> getRolesUnusedByUser(String userLogin){

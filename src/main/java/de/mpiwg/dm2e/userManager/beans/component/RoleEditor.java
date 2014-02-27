@@ -1,7 +1,5 @@
 package de.mpiwg.dm2e.userManager.beans.component;
 
-import java.util.List;
-
 import javax.faces.event.ActionEvent;
 
 import org.apache.commons.lang.StringUtils;
@@ -46,7 +44,7 @@ public class RoleEditor extends AbstractBean{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			addMsg(e.getMessage());
+			addInternalError();
 		}
 	}
 	

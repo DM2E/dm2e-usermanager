@@ -31,6 +31,7 @@ public abstract class AbstractDataProvider {
 	
 	private DuplexMap<UserRole> userRoleMap;
 	
+	/*
 	protected Map<String, User> getUserMap(){
 		if(userMap == null){
 			logger.info("Loading Users from DB");
@@ -40,7 +41,7 @@ public abstract class AbstractDataProvider {
 			}
 		}
 		return userMap;
-	}
+	}*/
 	
 	protected Map<String, Role> getRoleMap(){
 		if(roleMap == null){
@@ -86,7 +87,7 @@ public abstract class AbstractDataProvider {
 		session.getTransaction().commit();
 		
 		if(obj instanceof User){
-			getUserMap().remove(((User) obj).getLogin());
+			//getUserMap().remove(((User) obj).getLogin());
 		}else if(obj instanceof Role){
 			getRoleMap().remove(((Role) obj).getName());
 		}else if(obj instanceof UserRole){
@@ -103,10 +104,12 @@ public abstract class AbstractDataProvider {
 				HibernateUtil.getSessionFactory().getCurrentSession();
 		session.getTransaction().begin();
 		
+		//login and email should be equals
+		user.setEmail(user.getLogin());
 		session.saveOrUpdate(user);
 		
 		session.getTransaction().commit();
-		getUserMap().put(user.getLogin(), user);
+		//getUserMap().put(user.getLogin(), user);
 		logger.info("Saved=" + user);		
 	}
 	
@@ -149,11 +152,31 @@ public abstract class AbstractDataProvider {
 		session.saveOrUpdate(userRole);
 		
 		session.getTransaction().commit();
-		this.userRoleMap.put(userRole.getKey(), userRole);
+		this.getUserRoleMap().put(userRole.getKey(), userRole);
 		logger.info("Saved=" + userRole);		
 	}
 	
-	private List<User> getUserListFromDB(){
+	public User getUser(String login){
+		User user = null;
+		try {
+			Session session = 
+				HibernateUtil.getSessionFactory().getCurrentSession();
+			session.getTransaction().begin();
+			Query query = session.createQuery("from User where login = :login");
+			query.setString("login", login);
+			List<User> list = query.list();
+			if(!list.isEmpty()){
+				user = list.get(0);
+			}
+			session.getTransaction().commit();			
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return user;
+	}
+	
+	
+	public List<User> getUsers(){
 		List<User> list = null;
 		try {
 			Session session = 

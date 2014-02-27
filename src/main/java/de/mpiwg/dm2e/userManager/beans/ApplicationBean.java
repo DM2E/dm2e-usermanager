@@ -10,7 +10,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import de.mpiwg.dm2e.userManager.db.DataProvider;
@@ -53,11 +55,33 @@ public class ApplicationBean implements Serializable {
 	 
 	        //Print Maximum available memory
 	        logger.info("Max Memory:" + runtime.maxMemory() / mb + "\n");
+	        
+	        logger.info("java.class.path: " + System.getProperty( "java.class.path" ));
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		this.dp = new DataProvider();		
+	}
+	
+	public String getContextRoot(){
+		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		String port = (StringUtils.equals(request.getLocalPort() + "", "80")) ? "" : (":" + request.getLocalPort());
+		String path = request.getScheme() + "://" + request.getLocalName() + port + request.getContextPath();
+		return path;
+		
+	}
+	
+	public String getImgNew(){
+		return getContextRoot() + "/resources/images/new_24.png";
+	}
+	
+	public String getImgError(){
+		return getContextRoot() + "/resources/images/error_24.png";
+	}
+	
+	public String getImgInformation(){
+		return getContextRoot() + "/resources/images/information_24.png";
 	}
 	
 	public String getLoginUrl(){

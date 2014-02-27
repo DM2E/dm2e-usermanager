@@ -57,7 +57,7 @@ public class AccountsManager extends AccountEditor {
 			}	
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			addMsg(e.getMessage());
+			addInternalError();
 		}
 	}
 	
