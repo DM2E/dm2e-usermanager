@@ -5,7 +5,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.mpiwg.dm2e.userManager</groupId>
-	<artifactId>userManager</artifactId>
+	<artifactId>dm2eUserManager</artifactId>
 	<packaging>war</packaging>
 	
 	<version>1.0</version>
@@ -31,6 +31,14 @@
 	</properties>
 	
 	<dependencies>
+	
+		<dependency> 
+			<groupId>josso.plugin</groupId>
+			<artifactId>josso-maven-plugin</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>provided</scope> 
+			<!-- <classifier>sources</classifier> -->
+		</dependency>	
 	
         <dependency>
             <groupId>org.icefaces</groupId>
@@ -119,11 +127,11 @@
 		<dependency>
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
-		    <version>5.1.6</version>
+		    <version>5.1.13</version>
 		</dependency>
 		<!--  HIBERNATE  -->	
 		
-		<!-- jurzua -->	
+			
 		<dependency>
 		    <groupId>commons-lang</groupId>
 		    <artifactId>commons-lang</artifactId>
@@ -187,6 +195,40 @@
 			</testResource>
 		</testResources>
 		<plugins>
+	
+	      	<plugin>
+		        <groupId>josso.plugin</groupId>
+		        <artifactId>josso-maven-plugin</artifactId>
+		        <version>1.0-SNAPSHOT</version>
+		        
+                <configuration>
+                    
+                    <systemProperties>
+            			<java.security.auth.login.config>/Users/jurzua/Projects/tomcat-josso-7.0.27/conf/jaas.config</java.security.auth.login.config>
+        			</systemProperties>
+        			
+                    <!--
+                    <port>8080</port>
+                    <serverXml>${basedir}/tomcat/conf/server-default.xml</serverXml>
+					<additionalClasspathDirs>
+        				<additionalClasspathDir>/Users/jurzua/Projects/DM2E/maven/dm2eUserManager/tomcat/conf</additionalClasspathDir>
+      				</additionalClasspathDirs>
+      				<additionalClasspathElements>
+            			<additionalClasspathElement>/Users/jurzua/Projects/DM2E/maven/dm2eUserManager/tomcat/conf/</additionalClasspathElement>                    
+                    </additionalClasspathElements>
+                    
+                    <additionalClasspathDirs>
+        				<additionalClasspathDir>/Users/jurzua/Projects/DM2E/maven/dm2eUserManager/tomcat/conf</additionalClasspathDir>
+      				</additionalClasspathDirs>
+                    <resources>
+        				<resource>
+        				<directory>/Users/jurzua/Projects/DM2E/maven/dm2eUserManager/tomcat/conf/</directory>
+            			<filtering>false</filtering>
+        				</resource>
+        			</resources>	
+        			 -->
+                </configuration>
+	      	</plugin>		
 			<plugin>
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -236,13 +278,38 @@
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.0</version>
+				<!-- 
                 <configuration>
-                    <!-- <path>/dist/${project.name}.war</path> -->
                     <port>8080</port>
+					<additionalClasspathElements>
+            			<additionalClasspathElement>/Users/jurzua/Projects/DM2E/maven/dm2eUserManager/tomcat/conf/</additionalClasspathElement>                    
+                    </additionalClasspathElements>
+                    <serverXml>/Users/jurzua/Projects/tomcat-josso-7.0.27/conf/server.xml</serverXml>
+                    <additionalClasspathDirs>
+        				<additionalClasspathDir>/Users/jurzua/Projects/DM2E/maven/dm2eUserManager/tomcat/conf</additionalClasspathDir>
+      				</additionalClasspathDirs>
+                    <systemProperties>
+            			<java.security.auth.login.config>/Users/jurzua/Projects/tomcat-josso-7.0.27/conf/jaas.config</java.security.auth.login.config>
+        			</systemProperties>
+        			<resources>
+        				<resource>
+        				<directory>/Users/jurzua/Projects/DM2E/maven/dm2eUserManager/tomcat/conf/</directory>
+            			<filtering>false</filtering>
+        				</resource>
+        			</resources>	
                 </configuration>
+                 -->
+
                 <!-- josso dependencies -->
                 <!-- 
                 <dependencies>
+                	<dependency>
+                		<artifactId>aa</artifactId>
+    					<groupId>aa</groupId>
+    					<scope>system</scope>
+    					<version>1.0</version>
+    					<systemPath>/Users/jurzua/Projects/DM2E/maven/dm2eUserManager/tomcat/conf/josso-agent-config.xml</systemPath>
+					</dependency>
 					<dependency>
 						<groupId>org.apache.geronimo.specs</groupId>
 						<artifactId>geronimo-activation_1.1_spec</artifactId>
@@ -358,8 +425,42 @@
 						<artifactId>xbean-spring</artifactId>
 						<version>3.4.3</version>
 					</dependency>
+					 -->
+					<!-- 
+					<dependency>
+					    <groupId>com.josso</groupId>
+					    <artifactId>patch-josso-agents-bin</artifactId>
+					    <version>1.8.7</version>
+					</dependency>
+					 -->
+					 <!-- 					
+					<dependency>
+					    <groupId>com.josso</groupId>
+					    <artifactId>josso-tc70</artifactId>
+					    <version>1.8.7</version>
+					</dependency>
+					<dependency>
+					    <groupId>com.josso</groupId>
+					    <artifactId>josso-tc70</artifactId>
+					    <version>1.8.7</version>
+					</dependency>							
+					<dependency>
+					    <groupId>com.josso</groupId>
+					    <artifactId>josso-agent-shared</artifactId>
+					    <version>1.8.7</version>		    
+					</dependency>
+					<dependency>
+					    <groupId>com.josso</groupId>
+					    <artifactId>josso-agents-bin</artifactId>
+					    <version>1.8.7</version>
+					</dependency>
+					<dependency>
+					    <groupId>com.josso</groupId>
+					    <artifactId>josso-portal-identity</artifactId>
+					    <version>1.8.7</version>
+					</dependency> 
                 </dependencies>
-                 -->
+                -->
             </plugin>		
 			
 		</plugins>
@@ -387,3 +488,4 @@
         	
 	</repositories>
 	</project>
+
