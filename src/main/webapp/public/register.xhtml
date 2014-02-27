@@ -16,43 +16,55 @@
 
 			<ice:outputLabel value="Register" styleClass="titlePage" />
 
-			<ice:panelGrid columns="2"
+			<ice:panelGrid columns="3"
 				rendered="#{sessionBean.register.currentUser != null}"
-				width="100%">
+				width="600px;" style="display: block; margin-left: auto; margin-right: auto;">
 
-				<ice:outputLabel value="Login" styleClass="title" />
-				<ice:inputText value="#{sessionBean.register.currentUser.login}"
-					styleClass="text" />
-
+				<ice:outputLabel value="Email" styleClass="title" />
+				<ice:inputText id="email"
+					value="#{sessionBean.register.currentUser.login}" styleClass="text">		
+					<f:validator for="email" validatorId="emailValidator"/>			
+				</ice:inputText>
+				<ice:message for="email" styleClass="input" />
+				
 				<ice:outputLabel value="Password" styleClass="title" />
-				<ice:inputSecret value="#{sessionBean.register.password}"
+				<ice:inputSecret
+					id="password" 
+					value="#{sessionBean.register.password}"
+					binding="#{sessionBean.register.passwordComponent}"
 					styleClass="text" />
+				<ice:outputText />
 
 				<ice:outputLabel value="Repeat Password" styleClass="title" />
-				<ice:inputSecret value="#{sessionBean.register.passwordRepeat}"
-					styleClass="text" />
+				<ice:inputSecret id="repeatPassword"
+					value="#{sessionBean.register.passwordRepeat}" styleClass="text"
+					required="true" requiredMessage="Field can not be empty">
+					<f:validator for="repeatPassword" validatorId="passwordValidator"/>
+					<f:attribute name="passwordComponent" value="#{sessionBean.register.passwordComponent}" />
+				</ice:inputSecret>	
+				<ice:message for="repeatPassword" styleClass="input" />
 
 				<ice:outputLabel value="Name" styleClass="title" />
-				<ice:inputText value="#{sessionBean.register.currentUser.name}"
-					styleClass="text" />
-
-				<ice:outputLabel value="Description" styleClass="title" />
-				<ice:inputTextarea
-					value="#{sessionBean.register.currentUser.description}"
-					styleClass="text" />
+				<ice:inputText id="userName"
+					value="#{sessionBean.register.currentUser.name}" 
+					styleClass="text" required="true" requiredMessage="Field can not be empty">
+				</ice:inputText>
+				<ice:message for="userName" styleClass="input" />
 
 				<ice:outputText />
+				<ice:commandButton value="Register"
+					actionListener="#{sessionBean.register.listenerSaveUser}" />
+				<!-- 		
 				<ice:column>
-					<ice:commandButton value="Cancel"
+					<ice:commandButton value="Clean"
 						actionListener="#{sessionBean.register.listenerClean}" />
-					<ice:commandButton value="Save"
-						actionListener="#{sessionBean.register.listenerSaveUser}"
-						onclick="#{appBean.JSConfirmationSave}" />
+					<ice:commandButton value="Register"
+						actionListener="#{sessionBean.register.listenerSaveUser}"/>
 				</ice:column>
+				 -->
+				<ice:outputText />
 
 			</ice:panelGrid>
-
-
 
 		</ice:panelGrid>
 

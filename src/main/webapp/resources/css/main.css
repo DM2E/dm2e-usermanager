@@ -11,9 +11,9 @@
 }
 
 .tableContainer{
-	//background-color: olive;
-	width:100%;
-	display: inline-block;
+	margin-left: auto;
+    margin-right: auto;
+    width: 80%;
 }
 
 .tableContainer td {
@@ -22,19 +22,39 @@
 
 .title {
 	font-style:normal;
-	font-size:14px;
+	font-size:10px;
 	font-weight: bold;
 	color: black;
 	margin-right:10px;
 	margin-left:10px;
+	width: 80px;
+
 }
 
 .text {
 	font-style:normal;
-	font-size:12px;
+	font-size:10x;
 	font-weight: normal;
-	color: green;
-	width: 300px;
+	width: 200px;
+}
+
+.inputError{
+	color: red;
+	font-style:normal;
+	font-size:10x;
+	font-weight: normal;
+	width: 150px;
+	display: block;
+    vertical-align: top;
+    padding-left: 10px;
+}
+
+.icePnlGrdCol1{
+	vertical-align: middle;
+}
+
+.icePnlGrdCol2{
+	vertical-align: middle;
 }
 
 .textInTable{
@@ -42,6 +62,7 @@
 	font-size:12px;
 	font-weight: normal;
 	color: green;
+	
 }
 
 .titlePage{

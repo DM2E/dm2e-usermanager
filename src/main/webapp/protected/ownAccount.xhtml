@@ -86,7 +86,7 @@
 
 
 		<ice:panelGrid columns="1"
-			rendered="#{sessionBean.ownAccount.currentUser != null}" width="100%">
+			rendered="#{sessionBean.ownAccount.currentUser != null}" styleClass="tableContainer">
 
 			<ice:outputLabel value="Own Account" styleClass="titlePage" />
 
@@ -123,11 +123,14 @@
 						<ace:column headerText="Role" style="text-align:left;">
 							<ice:outputLabel value="#{soRole.obj.id.roleName}" styleClass="textInTable"/>
 						</ace:column>
+						<!-- 
 						<ace:column>
 							<ice:selectBooleanCheckbox value="#{soRole.selected}"
 								style="text-align:left;" />
 						</ace:column>
+						 -->
 					</ace:dataTable>
+					<!-- 
 					<ice:panelGroup>
 						<ice:commandButton value="Remove"
 							actionListener="#{sessionBean.ownAccount.listenerRemoveUserRole}"
@@ -135,6 +138,7 @@
 						<ice:commandButton value="Add"
 							actionListener="#{sessionBean.ownAccount.listenerAddUserRole}" />
 					</ice:panelGroup>
+					 -->
 				</ice:panelGrid>
 
 				<ice:outputLabel value="Properties" styleClass="title"/>
@@ -148,10 +152,13 @@
 						<ace:column headerText="Value" style="text-align:left;">
 							<ice:outputLabel value="#{soProp.obj.value}" styleClass="textInTable"/>
 						</ace:column>
+						<!-- 
 						<ace:column>
 							<ice:selectBooleanCheckbox value="#{soProp.selected}" />
 						</ace:column>
+						 -->
 					</ace:dataTable>
+					<!-- 
 					<ice:panelGroup>
 						<ice:commandButton value="Remove"
 							actionListener="#{sessionBean.ownAccount.listenerRemoveUserProp}"
@@ -159,6 +166,7 @@
 						<ice:commandButton value="Add"
 							actionListener="#{sessionBean.ownAccount.listenerAddUserProp}" />
 					</ice:panelGroup>
+					 -->
 				</ice:panelGrid>
 
 

@@ -6,6 +6,23 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
     version="2.1">
 
+	<factory>
+    	<exception-handler-factory>
+        	de.mpiwg.dm2e.userManager.jsf.exceptions.MyExceptionHandlerFactory
+    	</exception-handler-factory>
+	</factory>
+	
+	<validator>
+	    <validator-id>passwordValidator</validator-id>
+	    <validator-class>de.mpiwg.dm2e.userManager.jsf.validators.PasswordValidator</validator-class>
+	</validator>		
+	<validator>
+	    <validator-id>emailValidator</validator-id>
+	    <validator-class>de.mpiwg.dm2e.userManager.jsf.validators.EmailValidator</validator-class>
+	</validator>
+	
+	
+
 	<managed-bean>
         <managed-bean-name>appBean</managed-bean-name>
         <managed-bean-class>de.mpiwg.dm2e.userManager.beans.ApplicationBean</managed-bean-class>

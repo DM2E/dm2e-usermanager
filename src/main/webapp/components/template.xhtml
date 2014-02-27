@@ -13,9 +13,10 @@
 	    <!-- 
 	    <link rel="stylesheet" type="text/css" href="/userManager/xmlhttp/css/rime/rime.css" />
 	     -->
+	   	<ice:outputStyle href="#{appBean.requestContextPath}/resources/css/main.css"/>    
 	   	<ice:outputStyle href="#{appBean.requestContextPath}/resources/css/royale/royale.css"/>
 	   	<ice:outputStyle href="#{appBean.requestContextPath}/resources/css/josso/screen.css"/>  
-	   	<ice:outputStyle href="#{appBean.requestContextPath}/resources/css/main.css"/>    
+	   	
 	     
 	</h:head>
 	
@@ -48,7 +49,7 @@
 								<ice:panelGrid columns="1" style="width: 100%;">
 									<ice:panelGrid style="background-color: #D0D4EE;width: 100%;">
 										<ice:menuBar id="menuBar">
-											<ice:menuItem value="Register" action="register"/>
+											<ice:menuItem value="Register" action="register" rendered="#{sessionBean.principalNull}"/>
 											<ice:menuItem value="Own Account" action="ownAccount" rendered="#{!sessionBean.principalNull}" />
 											<!-- principal should be admin to see this item -->
 											<ice:menuItem value="Accounts Manager" action="accountsManager"  rendered="#{sessionBean.admin}" />
